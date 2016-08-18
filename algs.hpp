@@ -17,6 +17,7 @@ using midnight::core::void_;
 using midnight::core::char_;
 using midnight::core::long_;
 using midnight::core::size_t_;
+using midnight::list::make_type_list_;
 
 namespace midnight {
 	namespace algs {
