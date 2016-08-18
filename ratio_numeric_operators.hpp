@@ -55,14 +55,14 @@ namespace midnight {
 				};
 
 				template<class R1, class N> struct rpow_ {
-					typedef typename pow_<typename R1::numerator, N>::type __resulting_numerator;
-					typedef typename pow_<typename R1::denominator, N>::type __resulting_denominator;
-					typedef typename simplify_<
-								ratio_<
-									__resulting_numerator,
-									__resulting_denominator
-								>
-							>::type type, ratio_;
+					typedef typename simplify_<R1>::type __R;
+					typedef typename pow_<typename __R::numerator, N>::type __resulting_numerator;
+					typedef typename pow_<typename __R::denominator, N>::type __resulting_denominator;
+					typedef ratio_<__resulting_numerator, __resulting_denominator> type, ratio_;
+					typedef typename type::numerator numerator;
+					typedef typename type::denominator denominator;
+					static constexpr decltype(numerator::value) numerator_value = numerator::value;
+					static constexpr decltype(denominator::value) denominator_value = denominator::value;
 				};
 			}
 		}
