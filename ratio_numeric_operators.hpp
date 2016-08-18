@@ -53,6 +53,17 @@ namespace midnight {
 					static constexpr decltype(denominator::value) denominator_value = denominator::value;
 					constexpr rdivide_() {}
 				};
+
+				template<class R1, class N> struct rpow_ {
+					typedef typename pow_<typename R1::numerator, N>::type __resulting_numerator;
+					typedef typename pow_<typename R1::denominator, N>::type __resulting_denominator;
+					typedef typename simplify_<
+								ratio_<
+									__resulting_numerator,
+									__resulting_denominator
+								>
+							>::type type, ratio_;
+				};
 			}
 		}
 	}

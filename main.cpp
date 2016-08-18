@@ -306,5 +306,8 @@ int main(int argc, char* argv[]) {
 				R_(I_(1), I_(2))
 			>::type{}
 		<< '\n';
+	std::cout << rpow_<
+			R_(I_(2), I_(6)), I_(4)
+			>::type{} << '\n';
 	return 0;
 }
