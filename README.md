@@ -44,6 +44,7 @@ To conclude, here is an example where you can sum all the odd numbers between 1 
 
 ```
 #include "midnight.hpp"
+#include <iostream>
 
 int main(int argc, char* argv[]) {
 	typedef typename list::range_<I_(1), I_(101)>::type _1_100; // generates a midnight::list::type_list_ of numbers 1 <= x < 101
