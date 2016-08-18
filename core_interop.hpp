@@ -9,7 +9,9 @@
 #include "bool_operators.hpp"
 #include "conditional_operator.hpp"
 #include "ratio.hpp"
+#ifndef MIDNIGHT_NO_STD
 #include <cstddef>
+#endif
 
 #define MIDNIGHT_MAKE_TYPE_WITH_ARG(T, A) T<A>
 #define MIDNIGHT_MAKE_TYPE_WITH_ARGS(T, ...) T<__VA_ARGS__>
@@ -47,7 +49,11 @@ using namespace midnight::list;
 using namespace midnight::hlist;
 using namespace midnight::algs;
 using namespace midnight::operators;
-using std::size_t;
+#ifndef MIDNIGHT_NO_STD
+#define MIDNIGHT_SIZE_T std::size_t
+#else
+#define MIDNIGHT_SIZE_T unsigned int
+#endif
 
 namespace midnight {
 	namespace interop {
@@ -76,7 +82,8 @@ namespace midnight {
 
 		}
 
-		template<> void __internal_assign_array_helper<nil_, size_t, I_(-1)>(nil_, size_t*, I_(-1)) {
+		template<> void
+			__internal_assign_array_helper<nil_, MIDNIGHT_SIZE_T, I_(-1)>(nil_, MIDNIGHT_SIZE_T*, I_(-1)) {
 
 		}
 
@@ -122,8 +129,8 @@ namespace midnight {
 						typename not_<typename algs::list::all_<T, is_size_t_>::bool_>::bool_
 					>::type,
 				typename __internal_type_list_length = typename algs::list::len_<T>::length
-		> size_t* to_size_t_array_(T) {
-			size_t* res = new size_t[__internal_type_list_length::value];
+		> MIDNIGHT_SIZE_T* to_size_t_array_(T) {
+			MIDNIGHT_SIZE_T* res = new MIDNIGHT_SIZE_T[__internal_type_list_length::value];
 			__internal_assign_array_helper(T{}, res, I_(0){});
 			return res;
 		}
@@ -177,8 +184,8 @@ namespace midnight {
 						typename not_<typename algs::list::all_<T, is_size_t_>::bool_>::bool_
 					>::type,
 			typename __internal_type_list_length = typename algs::list::len_<T>::length
-		> void to_size_t_container_(T, C<size_t>& ret) {
-			size_t* res = to_size_t_container_(T{});
+		> void to_size_t_container_(T, C<MIDNIGHT_SIZE_T>& ret) {
+			MIDNIGHT_SIZE_T* res = to_size_t_container_(T{});
 			for(int i = 0; i < __internal_type_list_length::value; i++) ret.insert(ret.end(), res[i]);
 			delete res;
 		}
