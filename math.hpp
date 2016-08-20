@@ -221,12 +221,47 @@ namespace midnight {
 		template<class N, class B> struct log_floor_ {
 			typedef typename fail_<
 					typename logical_or_<
-						equals_<N, midnight::core::int_<0>>,
-						equals_<B, midnight::core::int_<0>>
+						less_than_or_equal_to_<N, midnight::core::int_<0>>,
+						less_than_or_equal_to_<B, midnight::core::int_<0>>
 					>::bool_
 				>::type __log_floor_sanity_check;
 			typedef typename __internal_log_floor<N, B, midnight::core::int_<0>>::type type, int_;
 			static constexpr decltype(type::value) value = type::value;
+		};
+
+		template<class N, class I, class R> struct __internal_to_binary {
+			typedef typename conditional_<
+					typename less_than_<I, int_<0>>::bool_,
+					R,
+					typename conditional_<
+						typename greater_than_or_equal_to_<
+							typename sub_<N, typename pow_<int_<2>, I>::int_>::int_,
+							int_<0>
+						>::bool_
+						,
+						__internal_to_binary<
+							typename sub_<N, typename pow_<int_<2>, I>::int_>::int_,
+							typename sub_<I, int_<1>>::int_,
+							typename algs::list::append_<R, bool_<true>>::type
+						>,
+						__internal_to_binary<
+							N,
+							typename sub_<I, int_<1>>::int_,
+							typename algs::list::append_<R, bool_<false>>::type
+						>
+					>::type
+				>::type::type type;
+		};
+
+		template<class N> struct to_binary_ {
+			typedef typename fail_<
+				typename less_than_<N, int_<0>>::bool_
+			>::type __to_binary_sanity_check;
+			typedef typename conditional_<
+				typename equals_<N, int_<0>>::bool_,
+				typename make_type_list_<bool_<false>>::type,
+				__internal_to_binary<N, typename log_floor_<N, int_<2>>::type, nil_>
+			>::type::type type;
 		};
 	}
 }
