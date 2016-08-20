@@ -309,5 +309,6 @@ int main(int argc, char* argv[]) {
 	std::cout << rpow_<
 			R_(I_(2), I_(6)), I_(4)
 			>::type{} << '\n';
+	std::cout << log_floor_<I_(3), I_(2)>::type{} << '\n';
 	return 0;
 }

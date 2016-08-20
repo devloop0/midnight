@@ -206,6 +206,28 @@ namespace midnight {
 			>::type type, int_;
 			static constexpr decltype(type::value) value = type::value;
 		};
+
+		template<class N, class B, class R> struct __internal_log_floor {
+			typedef typename conditional_<
+					typename equals_<N, midnight::core::int_<1>>::bool_,
+					R,
+					__internal_log_floor<typename divide_<N, midnight::core::int_<2>>::int_, B,
+								typename add_<R, midnight::core::int_<1>>::int_
+						>
+				>::type::type type, int_;
+			static constexpr decltype(type::value) value = type::value;
+		};
+
+		template<class N, class B> struct log_floor_ {
+			typedef typename fail_<
+					typename logical_or_<
+						equals_<N, midnight::core::int_<0>>,
+						equals_<B, midnight::core::int_<0>>
+					>::bool_
+				>::type __log_floor_sanity_check;
+			typedef typename __internal_log_floor<N, B, midnight::core::int_<0>>::type type, int_;
+			static constexpr decltype(type::value) value = type::value;
+		};
 	}
 }
 
