@@ -73,6 +73,7 @@ This program was a just a demonstration to show some of the features of midnight
 
 ```c++
 #include "midnight.hpp"
+#include <iostream>
 
 int main(int argc, char* argv[]) {
 	typedef typename list::stream_<I_(1), I_(101), I_(2)>::type _1_100_odd;
@@ -87,6 +88,7 @@ The most concise way of doing this (in my opinion) is like so:
 
 ```c++
 #include "midnight.hpp"
+#include <iostream>
 
 int main(int argc, char* argv[]) {
 	std::cout <<
