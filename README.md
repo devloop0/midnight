@@ -100,6 +100,6 @@ int main(int argc, char* argv[]) {
 }
 ```
 
-This example utilizes the vadd\_ template, which is the variadic version of the add\_ template (which just adds two template classes), and the apply\_ template which passes a list of arguments to a template.
+This example utilizes the vadd\_ template, which is the variadic version of the add\_ template (which just adds two template classes), and the apply\_ template which passes a list of arguments to a template. (This example takes around 2 seconds to compile on my machine).
 
 All three examples produce the same output.
