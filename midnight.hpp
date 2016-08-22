@@ -15,6 +15,8 @@
 #include "ratio_operators.hpp"
 #include "conditional_operator.hpp"
 #include "placeholders.hpp"
+#include "variadic_numeric_operators.hpp"
+#include "variadic_bool_operators.hpp"
 
 using namespace midnight::core;
 using namespace midnight::operators;
@@ -27,3 +29,4 @@ using namespace midnight::math;
 using namespace midnight::math::ratio;
 using namespace midnight::math::ratio::operators;
 using namespace midnight::placeholders;
+using namespace midnight::voperators;
