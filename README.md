@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 ```
-On my machine, the first example took around 6 seconds to finish compiling while the second example took around 0.7 seconds to finish compiling. (The reason the second example is faster is: (1) because it isn't processing the same thing twice (generating 1-100 and then filtering it), and (2) streams are lazy, so the entire list isn't evaluated all at once, so the elements of the stream are being computed as its being reduced). Both output the same thing. [As a sidenote: just incrementing by two and skipping filtering on the first example still takes around 2 seconds to compile on my machine].
+On my machine, the first example took around 6 seconds to finish compiling while the second example took around 0.7 seconds to finish compiling. (The reason the second example is faster is: (1) because it isn't processing the same thing twice (generating 1-100 and then filtering it), and (2) streams are lazy, so the entire list isn't evaluated all at once; the elements of the stream are being computed as its being reduced). Both output the same thing. [As a sidenote: just incrementing by two and skipping filtering on the first example still takes around 2 seconds to compile on my machine].
 
 The most concise way of doing this (in my opinion) is like so:
 
