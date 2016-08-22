@@ -82,7 +82,7 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 ```
-On my machine, the first example took around 6 seconds to finish compiling while the second example took around 0.7 seconds to finish compiling. (The reason the second example is faster is: (1) because it isn't processing the same thing twice (generating 1-100 and then filtering it), and (2) streams are lazy, so the entire isn't evaluated all at once, so when the stream is reduced, the elements are being computed as the stream is being reduced). Both output the same thing. [As a sidenote: just incrementing by two and skipping filtering on the first example still takes around 2 seconds to compile on my machine].
+On my machine, the first example took around 6 seconds to finish compiling while the second example took around 0.7 seconds to finish compiling. (The reason the second example is faster is: (1) because it isn't processing the same thing twice (generating 1-100 and then filtering it), and (2) streams are lazy, so the entire list isn't evaluated all at once, so the elements of the stream are being computed as its being reduced). Both output the same thing. [As a sidenote: just incrementing by two and skipping filtering on the first example still takes around 2 seconds to compile on my machine].
 
 The most concise way of doing this (in my opinion) is like so:
 
@@ -95,11 +95,11 @@ int main(int argc, char* argv[]) {
 		apply_<vadd_,
 				typename list::range_<I_(1), I_(101), I_(2)>::type
 			>::type{}
-		<< '\n';
+		<< '\n'; // this applies the list generated (1 to 100, incrementing by 2) to the vadd_ template
 	return 0;
 }
 ```
 
-This example utilizes the vadd\_ template, which variadic version of the add\_ template (which just adds two template classes). The apply\_ template just takes the first argument as a template and passes the rest of its arguments as arguments to the first parameter. (This example takes around 2 seconds to compile).
+This example utilizes the vadd\_ template, which is the variadic version of the add\_ template (which just adds two template classes), and the apply\_ template which passes a list of arguments to a template.
 
 All three examples produce the same output.
