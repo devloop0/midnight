@@ -263,6 +263,45 @@ namespace midnight {
 				__internal_to_binary<N, typename log_floor_<N, int_<2>>::type, nil_>
 			>::type::type type;
 		};
+
+		template<class X, class Y> struct __helper_egcd {
+			template<class T> struct __recombine_terms {
+				typedef typename make_type_list_<
+					typename algs::list::at_<T, int_<0>>::type,
+					typename algs::list::at_<T, int_<2>>::type,
+					typename sub_<
+						typename algs::list::at_<T, int_<1>>::type,
+						typename times_<
+							typename divide_<
+								X, Y
+							>::type,
+							typename algs::list::at_<T, int_<2>>::type
+						>::type
+					>::type
+				>::type type;
+			};
+			typedef typename conditional_<
+				typename equals_<Y, int_<0>>::bool_,
+				typename make_type_list_<X, int_<1>, int_<0>>::type,
+				typename __recombine_terms<
+					typename __helper_egcd<
+						Y,
+						typename mod_<X, Y>::type
+					>::type
+				>::type
+			>::type type;
+		};
+		
+		template<class X> struct __helper_egcd<X, int_<0>> {
+			typedef typename make_type_list_<X, int_<1>, int_<0>>::type type;
+		};
+
+		template<class X, class Y> struct egcd_ {
+			typedef typename __helper_egcd<X, Y>::type list_type, type;
+			typedef typename algs::list::at_<list_type, int_<0>>::type gcd_type;
+			typedef typename algs::list::at_<list_type, int_<1>>::type X_coefficient_type;
+			typedef typename algs::list::at_<list_type, int_<2>>::type Y_coefficient_type;
+		};
 	}
 }
 

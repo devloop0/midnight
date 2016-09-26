@@ -311,5 +311,6 @@ int main(int argc, char* argv[]) {
 			>::type{} << '\n';
 	std::cout << log_floor_<I_(3), I_(2)>::type{} << '\n';
 	std::cout << to_binary_<int_<82346>>::type{} << '\n';
+	std::cout << egcd_<int_<16321>, int_<135749>>::type{} << '\n';
 	return 0;
 }
